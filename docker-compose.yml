@@ -1,0 +1,13 @@
+version: '3.3'
+services:
+  www:
+    image: httpd:2.4.41
+    ports:
+        - "8888:80"
+    depends_on:
+        - fcgi
+    volumes:
+        - ./docker/apache/conf/fcgi.conf:/usr/local/apache2/conf/extra/fcgi.conf
+    command: bash -c "echo 'Include conf/extra/fcgi.conf' >> /usr/local/apache2/conf/httpd.conf && httpd-foreground"
+  fcgi:
+    image: nozomi0966/fastcgi-golang-try
